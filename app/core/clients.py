@@ -1,6 +1,5 @@
-from openai import AsyncOpenAI
+from google import genai
 import opik
-from opik.integrations.openai import track_openai
 from app.core.config import settings
 
 opik_client = opik.Opik(
@@ -8,11 +7,10 @@ opik_client = opik.Opik(
     api_key=settings.OPIK_API_KEY
 )
 
-_openai_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
-openai_client = track_openai(_openai_client, project_name=settings.PROJECT_NAME)
+client = genai.Client(api_key=settings.GOOGLE_API_KEY)
 
-def get_openai_client():
-    return openai_client
+def get_gemini_client():
+    return client
 
 def get_opik_client():
     return opik_client

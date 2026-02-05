@@ -7,7 +7,6 @@ class UserProfile(BaseModel):
     user_id: str
     age: int
     gender: str
-    membership_type: str
     join_date: Optional[str] = None
 
 class ActivityData(BaseModel):
