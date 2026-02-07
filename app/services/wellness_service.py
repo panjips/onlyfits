@@ -1,12 +1,11 @@
-from app.core.clients import get_gemini_client
-from google import genai
+from app.core.clients import get_openai_client
 from app.core.prompts import get_attendance_prompt, get_burnout_prompt
 from opik import track
 from app.schemas import WellnessAnalysisRequest, WellnessAnalysisResponse, AttendanceAnalysis, BurnoutAnalysis
 import json
 from app.core.config import settings
 
-client = get_gemini_client()
+client = get_openai_client()
 
 class WellnessService:
     @track(name="analyze_wellness", project_name=settings.PROJECT_NAME)
@@ -36,15 +35,13 @@ class WellnessService:
         
         prompt = get_attendance_prompt(context, sessions, consistency_score, consistency_level)
 
-
-
-        response = await client.aio.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=prompt,
-            config=genai.types.GenerateContentConfig(response_mime_type="application/json")
+        response = await client.chat.completions.create(
+            model=settings.OPENAI_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"}
         )
         
-        data = json.loads(response.text)
+        data = json.loads(response.choices[0].message.content)
         return AttendanceAnalysis(
             score=consistency_score,
             consistency_level=consistency_level,
@@ -55,11 +52,11 @@ class WellnessService:
     async def _generate_burnout_insight(self, context: dict) -> BurnoutAnalysis:
         prompt = get_burnout_prompt(context)
 
-        response = await client.aio.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=prompt,
-            config=genai.types.GenerateContentConfig(response_mime_type="application/json")
+        response = await client.chat.completions.create(
+            model=settings.OPENAI_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"}
         )
         
-        data = json.loads(response.text)
+        data = json.loads(response.choices[0].message.content)
         return BurnoutAnalysis(**data)

@@ -9,8 +9,8 @@ class Settings(BaseSettings):
     PORT: int = 8000
     ENVIRONMENT: str = "development"
     
-    GOOGLE_API_KEY: str
-    GEMINI_MODEL: str = "gemini-1.5-flash"
+    OPENAI_API_KEY: str
+    OPENAI_MODEL: str = "gpt-4o-mini"
     OPIK_API_KEY: str
     
     class Config:

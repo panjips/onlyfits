@@ -48,3 +48,11 @@ class BurnoutAnalysis(BaseModel):
 class WellnessAnalysisResponse(BaseModel):
     attendance_analysis: AttendanceAnalysis
     burnout_analysis: BurnoutAnalysis
+
+class ChatbotRequest(BaseModel):
+    query: str = Field(..., description="User's question about gym/fitness")
+    context: WellnessAnalysisRequest
+
+class ChatbotResponse(BaseModel):
+    answer: str
+    suggested_actions: Optional[List[str]] = None
