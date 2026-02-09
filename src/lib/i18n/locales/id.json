@@ -1,0 +1,53 @@
+{
+  "common": {
+    "welcome": "Selamat Datang",
+    "login": "Masuk",
+    "logout": "Keluar",
+    "register": "Daftar",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "confirmPassword": "Konfirmasi Kata Sandi",
+    "submit": "Kirim",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "edit": "Ubah",
+    "loading": "Memuat...",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "settings": "Pengaturan",
+    "profile": "Profil",
+    "language": "Bahasa",
+    "english": "Inggris",
+    "indonesian": "Indonesia",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "search": "Cari",
+    "noResults": "Tidak ada hasil",
+    "home": "Beranda"
+  },
+  "auth": {
+    "loginTitle": "Masuk ke Akun Anda",
+    "registerTitle": "Buat Akun Baru",
+    "forgotPassword": "Lupa Kata Sandi?",
+    "resetPassword": "Atur Ulang Kata Sandi",
+    "rememberMe": "Ingat Saya",
+    "dontHaveAccount": "Belum punya akun?",
+    "alreadyHaveAccount": "Sudah punya akun?",
+    "signInWith": "Masuk dengan {{provider}}",
+    "orContinueWith": "Atau lanjutkan dengan"
+  },
+  "validation": {
+    "required": "Kolom ini wajib diisi",
+    "invalidEmail": "Alamat email tidak valid",
+    "passwordMinLength": "Kata sandi minimal harus {{count}} karakter",
+    "passwordMismatch": "Kata sandi tidak cocok"
+  },
+  "errors": {
+    "somethingWentWrong": "Terjadi kesalahan",
+    "networkError": "Kesalahan jaringan. Silakan coba lagi.",
+    "unauthorized": "Anda tidak memiliki akses ke halaman ini",
+    "notFound": "Halaman tidak ditemukan"
+  }
+}
