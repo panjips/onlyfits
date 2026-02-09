@@ -1,0 +1,15 @@
+services:
+  fitcore-fe:
+    image: ghcr.io/panjips/fitcore-fe:latest
+    container_name: fitcore-fe
+    ports:
+      - "19431:19431"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - cloudflare-tunnel
+
+networks:
+  cloudflare-tunnel:
+    external: true
