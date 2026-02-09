@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    restart: unless-stopped
+    container_name: fitcore
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      APP_ENV: ${APP_ENV}
+      PORT: ${PORT}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SCHEMA: ${DB_SCHEMA}
+      DB_CONN_STIRNG: ${DB_CONN_STIRNG}
+      JWT_SECRET: ${JWT_SECRET}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      EMAIL_FROM_ADDRESS: ${EMAIL_FROM_ADDRESS}
+      EMAIL_FROM_NAME: ${EMAIL_FROM_NAME}
+      APP_BASE_URL: ${APP_BASE_URL}
+      ANALYTICS_SERVICE_URL: ${ANALYTICS_SERVICE_URL}
+      POLAR_ACCESS_TOKEN: ${POLAR_ACCESS_TOKEN}
+      POLAR_WEBHOOK_SECRET: ${POLAR_WEBHOOK_SECRET}
+      POLAR_ENV: ${POLAR_ENV}
+      POLAR_ORGANIZATION_ID: ${POLAR_ORGANIZATION_ID}
+    networks:
+      - cloudflare-tunnel
+
+networks:
+  cloudflare-tunnel:
+    external: true

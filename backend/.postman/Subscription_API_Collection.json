@@ -1,0 +1,488 @@
+{
+	"info": {
+		"_postman_id": "subscription-api-collection",
+		"name": "Subscription API Collection",
+		"description": "Complete Postman collection for Subscription API endpoints with authentication and role-based access",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		},
+		{
+			"key": "subscription_id",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string"
+		},
+		{
+			"key": "member_id",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string"
+		},
+		{
+			"key": "plan_id",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string"
+		},
+		{
+			"key": "branch_id",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string"
+		},
+		{
+			"key": "organization_id",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Create Subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"memberId\": \"{{member_id}}\",\n  \"planId\": \"{{plan_id}}\",\n  \"branchId\": \"{{branch_id}}\",\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-12-31\",\n  \"status\": \"active\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"]
+				},
+				"description": "Create a new subscription. Requires super_admin, admin, or staff role.\n\nRequired fields:\n- memberId: UUID of the member\n- startDate: Start date in YYYY-MM-DD format\n- endDate: End date in YYYY-MM-DD format\n\nOptional fields:\n- planId: UUID of the subscription plan\n- branchId: UUID of the branch\n- status: Subscription status (e.g., active, expired, cancelled)"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Subscription - Minimal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"memberId\": \"{{member_id}}\",\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-12-31\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"]
+				},
+				"description": "Create subscription with only required fields"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subscription",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"planId\": \"{{plan_id}}\",\n  \"branchId\": \"{{branch_id}}\",\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-12-31\",\n  \"status\": \"active\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/{{subscription_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "{{subscription_id}}"]
+				},
+				"description": "Update an existing subscription. Requires super_admin, admin, or staff role.\n\nAll fields are optional:\n- planId: UUID of the subscription plan\n- branchId: UUID of the branch\n- startDate: Start date in YYYY-MM-DD format\n- endDate: End date in YYYY-MM-DD format\n- status: Subscription status"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subscription - Status Only",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"expired\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/{{subscription_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "{{subscription_id}}"]
+				},
+				"description": "Update only the subscription status"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Subscription by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/{{subscription_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "{{subscription_id}}"]
+				},
+				"description": "Retrieve a specific subscription by ID. Requires authentication."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Subscription by Member",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/member/{{member_id}}/active",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "member", "{{member_id}}", "active"]
+				},
+				"description": "Retrieve the active subscription for a specific member. Requires authentication."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Subscription",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/{{subscription_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "{{subscription_id}}"]
+				},
+				"description": "Delete a subscription. Requires super_admin, admin, or staff role."
+			},
+			"response": []
+		},
+		{
+			"name": "List All Subscriptions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"]
+				},
+				"description": "List all subscriptions without filters. Requires authentication."
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions with Pagination",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions?page=1&limit=10",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				},
+				"description": "List subscriptions with pagination (page 1, limit 10)"
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions by Organization",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions?organizationId={{organization_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "{{organization_id}}"
+						}
+					]
+				},
+				"description": "Filter subscriptions by organization ID"
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions by Branch",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions?branchId={{branch_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"],
+					"query": [
+						{
+							"key": "branchId",
+							"value": "{{branch_id}}"
+						}
+					]
+				},
+				"description": "Filter subscriptions by branch ID"
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions by Member",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions?memberId={{member_id}}",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"],
+					"query": [
+						{
+							"key": "memberId",
+							"value": "{{member_id}}"
+						}
+					]
+				},
+				"description": "Filter subscriptions by member ID"
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions by Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions?status=active",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"],
+					"query": [
+						{
+							"key": "status",
+							"value": "active"
+						}
+					]
+				},
+				"description": "Filter subscriptions by status (active, expired, cancelled)"
+			},
+			"response": []
+		},
+		{
+			"name": "List Subscriptions - Complex Filter",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions?page=1&limit=20&organizationId={{organization_id}}&branchId={{branch_id}}&memberId={{member_id}}&status=active",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions"],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "organizationId",
+							"value": "{{organization_id}}"
+						},
+						{
+							"key": "branchId",
+							"value": "{{branch_id}}"
+						},
+						{
+							"key": "memberId",
+							"value": "{{member_id}}"
+						},
+						{
+							"key": "status",
+							"value": "active"
+						}
+					]
+				},
+				"description": "Complex filter example combining multiple filters: pagination, organization, branch, member, and status"
+			},
+			"response": []
+		},
+		{
+			"name": "Renew Subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"planId\": \"{{plan_id}}\",\n  \"branchId\": \"{{branch_id}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/member/{{member_id}}/renew",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "member", "{{member_id}}", "renew"]
+				},
+				"description": "Renew a member's subscription. Requires super_admin, admin, or staff role.\n\nOptional fields:\n- planId: UUID of the new subscription plan\n- branchId: UUID of the branch\n\nIf no body is provided, renews with the same plan."
+			},
+			"response": []
+		},
+		{
+			"name": "Renew Subscription - Same Plan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/member/{{member_id}}/renew",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "member", "{{member_id}}", "renew"]
+				},
+				"description": "Renew subscription with the same plan (empty body)"
+			},
+			"response": []
+		},
+		{
+			"name": "Expire Old Subscriptions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/subscriptions/expire-old",
+					"host": ["{{base_url}}"],
+					"path": ["api", "v1", "subscriptions", "expire-old"]
+				},
+				"description": "Expire subscriptions that have passed their end date. Requires super_admin, admin, or staff role.\n\nReturns the count of expired subscriptions."
+			},
+			"response": []
+		}
+	]
+}
